@@ -13,6 +13,8 @@ class TestCarmen < Test::Unit::TestCase
   def test_localized_countries
     Carmen.default_locale = :de
     assert_equal ["Ascension (verwaltet von St. Helena)", 'AC'], Carmen.countries[0]
+    Carmen.default_locale = :es
+    assert_equal ["Afganistán", 'AF'], Carmen.countries[0]
   end
   
   def test_single_localized_countries_call
@@ -34,8 +36,11 @@ class TestCarmen < Test::Unit::TestCase
   def test_localized_country_name
     assert_equal 'Germany', Carmen.country_name('DE')
     assert_equal 'Deutschland', Carmen.country_name('DE', :locale => :de)
+    assert_equal 'Alemania', Carmen.country_name('DE', :locale => :es)
     Carmen.default_locale = :de
     assert_equal 'Deutschland', Carmen.country_name('DE')
+    Carmen.default_locale = :es
+    assert_equal 'Alemania', Carmen.country_name('DE')
   end
   
   def test_country_code
@@ -46,8 +51,11 @@ class TestCarmen < Test::Unit::TestCase
   
   def test_localized_country_code
     assert_equal 'DE', Carmen.country_code('Deutschland', :locale => :de)
+    assert_equal 'DE', Carmen.country_code('Alemania', :locale => :es)
     Carmen.default_locale = :de
     assert_equal 'DE', Carmen.country_code('Deutschland')
+    Carmen.default_locale = :es
+    assert_equal 'DE', Carmen.country_code('Alemania')
   end
   
   def test_country_codes
